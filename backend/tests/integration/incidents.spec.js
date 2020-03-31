@@ -12,7 +12,43 @@ describe("Incidents", () => {
     await connection.destroy();
   });
 
-  it("should be able to create new incident", async () => {
+  it("Should be able to create new incident with valid credentials", async () => {
+    const ongName = "GBUD",
+      ongEmail = "teste@email.com",
+      ongWhatsapp = "3111111111",
+      ongCity = "Belo Horizonte",
+      ongUf = "MG";
+
+    const incidentTitle = "New incident",
+      incidentDescription = "Incident description",
+      incidentValue = 100.99;
+
+    const ongResponse = await request(app)
+      .post("/ongs")
+      .send({
+        name: ongName,
+        email: ongEmail,
+        whatsapp: ongWhatsapp,
+        city: ongCity,
+        uf: ongUf
+      });
+
+    const ong_id = ongResponse.body.id;
+
+    const response = await request(app)
+      .post("/incidents")
+      .send({
+        title: incidentTitle,
+        description: incidentDescription,
+        value: incidentValue
+      })
+      .set("authorization", ong_id);
+
+    expect(response.status).toEqual(200);
+    expect(response.body).toHaveProperty("id");
+  });
+
+  it("should not be able to create new incident with invalid credentials", async () => {
     const response = await request(app)
       .post("/incidents")
       .send({
@@ -22,8 +58,9 @@ describe("Incidents", () => {
       })
       .set("authorization", "1663a5b7");
 
-    expect(response.body).toHaveProperty("id");
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(401);
+    expect(response.body).toHaveProperty("error");
+    expect(response.body.error).toBe("Operation not permitted.");
   });
 
   it("should be required to set authorization to create incident", async () => {
