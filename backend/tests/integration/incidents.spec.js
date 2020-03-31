@@ -25,4 +25,17 @@ describe("Incidents", () => {
     expect(response.body).toHaveProperty("id");
     expect(response.status).toEqual(200);
   });
+
+  it("should be required to set authorizatoin", async () => {
+    const response = await request(app)
+      .post("/incidents")
+      .send({
+        title: "New incident",
+        description: "Incident description",
+        value: 100.99
+      });
+
+    expect(response.status).toEqual(400);
+    expect(response.body.message).toEqual('"authorization" is required');
+  });
 });
