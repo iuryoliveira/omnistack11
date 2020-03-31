@@ -26,7 +26,7 @@ describe("Incidents", () => {
     expect(response.status).toEqual(200);
   });
 
-  it("should be required to set authorizatoin", async () => {
+  it("should be required to set authorization to create incident", async () => {
     const response = await request(app)
       .post("/incidents")
       .send({
@@ -126,5 +126,46 @@ describe("Incidents", () => {
 
     expect(responseDeleteIncident.status).toEqual(204);
     expect(responseGetIncidents.body).toEqual([]);
+  });
+
+  it("should be required to set authorization to delete incident", async () => {
+    const ongName = "GBUD",
+      ongEmail = "teste@email.com",
+      ongWhatsapp = "3111111111",
+      ongCity = "Belo Horizonte",
+      ongUf = "MG";
+
+    const incidentTitle = "New incident",
+      incidentDescription = "Incident description",
+      incidentValue = 100.99;
+
+    const ongResponse = await request(app)
+      .post("/ongs")
+      .send({
+        name: ongName,
+        email: ongEmail,
+        whatsapp: ongWhatsapp,
+        city: ongCity,
+        uf: ongUf
+      });
+
+    const ong_id = ongResponse.body.id;
+
+    const incidentResponse = await request(app)
+      .post("/incidents")
+      .send({
+        title: incidentTitle,
+        description: incidentDescription,
+        value: incidentValue
+      })
+      .set("authorization", ong_id);
+
+    const incident_id = incidentResponse.body.id;
+
+    const responseDeleteIncident = await request(app).delete(
+      `/incidents/${incident_id}`
+    );
+
+    expect(responseDeleteIncident.status).toEqual(401);
   });
 });
