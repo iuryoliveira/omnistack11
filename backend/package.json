@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/server.js",
     "updateDatabase": "npx knex migrate:latest",
-    "test": "cross-env NODE-ENV=test && jest"
+    "test": "cross-env NODE-ENV=test && jest --runInBand"
   },
   "keywords": [],
   "author": "",
