@@ -25,5 +25,33 @@ describe("ONG", () => {
 
     expect(response.body).toHaveProperty("id");
     expect(response.body.id).toHaveLength(8);
+    expect(response.status).toEqual(200);
+  });
+
+  it("Should be able to list ONG", async () => {
+    const name = "GBUD",
+      email = "teste@email.com",
+      whatsapp = "3111111111",
+      city = "Belo Horizonte",
+      uf = "MG";
+
+    await request(app)
+      .post("/ongs")
+      .send({
+        name,
+        email,
+        whatsapp,
+        city,
+        uf
+      });
+
+    let response = await request(app).get("/ongs");
+    expect(response.body[0].id).toHaveLength(8);
+    expect(response.body[0].name).toEqual(name);
+    expect(response.body[0].email).toEqual(email);
+    expect(response.body[0].whatsapp).toEqual(whatsapp);
+    expect(response.body[0].city).toEqual(city);
+    expect(response.body[0].uf).toEqual(uf);
+    expect(response.status).toEqual(200);
   });
 });
