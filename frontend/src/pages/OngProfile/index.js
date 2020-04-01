@@ -17,12 +17,12 @@ export default function OngProfile() {
   const ongId = localStorage.getItem("ongId");
 
   useEffect(() => {
-    api.get("/ongs").then(response => {
-      setName(response.data[0].name);
-      setEmail(response.data[0].email);
-      setWhatsapp(response.data[0].whatsapp);
-      setCity(response.data[0].city);
-      setUf(response.data[0].uf);
+    api.get(`/ongs/${ongId}`).then(response => {
+      setName(response.data.name);
+      setEmail(response.data.email);
+      setWhatsapp(response.data.whatsapp);
+      setCity(response.data.city);
+      setUf(response.data.uf);
     });
   }, [ongId]);
 
@@ -81,7 +81,7 @@ export default function OngProfile() {
           </div>
 
           <button className="button" type="submit">
-            Cadastrar
+            Atualizar
           </button>
         </form>
       </div>
