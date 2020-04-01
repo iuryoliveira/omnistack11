@@ -35,5 +35,24 @@ module.exports = {
     });
 
     return response.json({ id });
+  },
+
+  async update(request, response) {
+    let { name, email, whatsapp, city, uf } = request.body;
+    let ong_id = request.headers.authorization;
+
+    whatsapp = normalizePhoneNumber(whatsapp);
+
+    await connection("ongs")
+      .update({
+        name,
+        email,
+        whatsapp,
+        city,
+        uf
+      })
+      .where("id", ong_id);
+
+    return response.status(204).send();
   }
 };

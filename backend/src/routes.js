@@ -54,6 +54,16 @@ routes.get(
   OngController.find
 );
 
+routes.put(
+  "/ongs",
+  celebrate({
+    [Segments.HEADERS]: Joi.object({
+      authorization: Joi.string().required()
+    }).unknown()
+  }),
+  OngController.update
+);
+
 routes.get(
   "/profile",
   celebrate({
