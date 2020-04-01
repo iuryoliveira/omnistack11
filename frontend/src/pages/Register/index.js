@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import InputMask from "react-input-mask";
 import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
@@ -66,7 +67,8 @@ export default function Register() {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          <input
+          <InputMask
+            mask="(99)99999-9999"
             placeholder="Whatsapp"
             value={whatsapp}
             onChange={e => setWhatsapp(e.target.value)}
@@ -74,7 +76,7 @@ export default function Register() {
 
           <div className="input-group">
             <input
-              placeholder="cidade"
+              placeholder="Cidade"
               value={city}
               onChange={e => setCity(e.target.value)}
             />
