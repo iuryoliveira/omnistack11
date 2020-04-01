@@ -26,8 +26,29 @@ export default function OngProfile() {
     });
   }, [ongId]);
 
-  function handleRegister(e) {
+  async function handleUpdate(e) {
     e.preventDefault();
+
+    const data = {
+      name,
+      email,
+      whatsapp,
+      city,
+      uf
+    };
+
+    try {
+      await api.put("/ongs", data, {
+        headers: {
+          Authorization: ongId
+        }
+      });
+
+      localStorage.setItem("ongName", name);
+      alert("Informações atualizadas com sucesso.");
+    } catch (err) {
+      alert("Erro no cadastro. Tente novamente");
+    }
   }
 
   return (
@@ -47,7 +68,7 @@ export default function OngProfile() {
           </Link>
         </section>
 
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleUpdate}>
           <input
             placeholder="Nome da ONG"
             value={name}
