@@ -54,4 +54,34 @@ describe("ONG", () => {
     expect(response.body[0].uf).toEqual(uf);
     expect(response.status).toEqual(200);
   });
+
+  it("Should be able to find ONG", async () => {
+    const name = "GBUD",
+      email = "teste@email.com",
+      whatsapp = "3111111111",
+      city = "Belo Horizonte",
+      uf = "MG";
+
+    const ongResponse = await request(app)
+      .post("/ongs")
+      .send({
+        name,
+        email,
+        whatsapp,
+        city,
+        uf
+      });
+
+    const id = ongResponse.body.id;
+
+    let response = await request(app).get(`/ongs/${id}`);
+
+    expect(response.body.id).toHaveLength(8);
+    expect(response.body.name).toEqual(name);
+    expect(response.body.email).toEqual(email);
+    expect(response.body.whatsapp).toEqual(whatsapp);
+    expect(response.body.city).toEqual(city);
+    expect(response.body.uf).toEqual(uf);
+    expect(response.status).toEqual(200);
+  });
 });

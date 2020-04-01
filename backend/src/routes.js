@@ -43,6 +43,18 @@ routes.post(
 );
 
 routes.get(
+  "/ongs/:id",
+  celebrate({
+    [Segments.PARAMS]: Joi.object({
+      id: Joi.string()
+        .required()
+        .length(8)
+    })
+  }),
+  OngController.find
+);
+
+routes.get(
   "/profile",
   celebrate({
     [Segments.HEADERS]: Joi.object({

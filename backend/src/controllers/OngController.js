@@ -10,6 +10,15 @@ module.exports = {
     return response.json(ongs);
   },
 
+  async find(request, response) {
+    const { id } = request.params;
+    const ong = await connection("ongs")
+      .select("*")
+      .where("id", id)
+      .first();
+    return response.json(ong);
+  },
+
   async create(request, response) {
     let { name, email, whatsapp, city, uf } = request.body;
     const id = generateUniqueId();
