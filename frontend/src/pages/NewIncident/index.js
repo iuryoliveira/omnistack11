@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
-import LogoImp from "../../assets/logo.svg";
+import LogoImg from "../../assets/logo.svg";
 
 import api from "../../services/api";
 import "./styles.css";
@@ -41,7 +41,7 @@ export default function NewIncident() {
     <div className="new-incident-container">
       <div className="content">
         <section>
-          <img src={LogoImp} alt="Be The Hero" />
+          <img src={LogoImg} alt="Be The Hero" />
 
           <h1>Cadastrar novo caso</h1>
           <p>
