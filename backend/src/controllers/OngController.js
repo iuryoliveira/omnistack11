@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const generateUniqueId = require("../utils/generateUniqueId");
+const normalizePhoneNumber = require("../utils/normalizePhoneNumber");
 const connection = require("../database/connection");
 
 module.exports = {
@@ -10,8 +11,10 @@ module.exports = {
   },
 
   async create(request, response) {
-    const { name, email, whatsapp, city, uf } = request.body;
+    let { name, email, whatsapp, city, uf } = request.body;
     const id = generateUniqueId();
+
+    whatsapp = normalizePhoneNumber(whatsapp);
 
     await connection("ongs").insert({
       id,
