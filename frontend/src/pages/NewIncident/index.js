@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CurrencyFormat from "react-currency-format";
 import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
@@ -66,8 +67,12 @@ export default function NewIncident() {
             value={description}
             onChange={e => setDescription(e.target.value)}
           />
-          <input
+
+          <CurrencyFormat
             placeholder="Valor em reais"
+            allowNegative={false}
+            decimalSeparator={","}
+            prefix={"R$"}
             value={value}
             onChange={e => setValue(e.target.value)}
           />
