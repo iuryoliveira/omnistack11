@@ -29,23 +29,21 @@ describe("ONG", () => {
   });
 
   it("Should be able to list ONG", async () => {
-    const name = "GBUD",
-      email = "teste@email.com",
-      whatsapp = "3111111111",
-      city = "Belo Horizonte",
-      uf = "MG";
+    const data = {
+      name: "GBUD",
+      email: "teste@email.com",
+      whatsapp: "3111111111",
+      city: "Belo Horizonte",
+      uf: "MG"
+    };
 
     await request(app)
       .post("/ongs")
-      .send({
-        name,
-        email,
-        whatsapp,
-        city,
-        uf
-      });
+      .send(data);
 
     let response = await request(app).get("/ongs");
+
+    const { name, email, whatsapp, city, uf } = data;
     expect(response.body[0].id).toHaveLength(8);
     expect(response.body[0].name).toEqual(name);
     expect(response.body[0].email).toEqual(email);
@@ -56,26 +54,23 @@ describe("ONG", () => {
   });
 
   it("Should be able to find ONG", async () => {
-    const name = "GBUD",
-      email = "teste@email.com",
-      whatsapp = "3111111111",
-      city = "Belo Horizonte",
-      uf = "MG";
+    const data = {
+      name: "GBUD",
+      email: "teste@email.com",
+      whatsapp: "3111111111",
+      city: "Belo Horizonte",
+      uf: "MG"
+    };
 
     const ongResponse = await request(app)
       .post("/ongs")
-      .send({
-        name,
-        email,
-        whatsapp,
-        city,
-        uf
-      });
+      .send(data);
 
     const id = ongResponse.body.id;
 
     let response = await request(app).get(`/ongs/${id}`);
 
+    const { name, email, whatsapp, city, uf } = data;
     expect(response.body.id).toHaveLength(8);
     expect(response.body.name).toEqual(name);
     expect(response.body.email).toEqual(email);
