@@ -16,6 +16,17 @@ export default function NewIncident() {
   const history = useHistory();
   const ongId = localStorage.getItem("ongId");
 
+  function normalizeMoneyValue(value) {
+    if (value !== "") {
+      return parseFloat(
+        value
+          .replace("R", "")
+          .replace("$", "")
+          .replace(",", ".")
+      );
+    }
+  }
+
   async function handleNewIncident(e) {
     e.preventDefault();
 
@@ -74,16 +85,7 @@ export default function NewIncident() {
             decimalSeparator={","}
             prefix={"R$"}
             value={value}
-            onChange={e =>
-              setValue(
-                parseFloat(
-                  e.target.value
-                    .replace("R", "")
-                    .replace("$", "")
-                    .replace(",", ".")
-                )
-              )
-            }
+            onChange={e => setValue(normalizeMoneyValue(e.target.value))}
           />
 
           <button className="button" type="submit">
