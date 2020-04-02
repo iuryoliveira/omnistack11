@@ -74,7 +74,16 @@ export default function NewIncident() {
             decimalSeparator={","}
             prefix={"R$"}
             value={value}
-            onChange={e => setValue(e.target.value)}
+            onChange={e =>
+              setValue(
+                parseFloat(
+                  e.target.value
+                    .replace("R", "")
+                    .replace("$", "")
+                    .replace(",", ".")
+                )
+              )
+            }
           />
 
           <button className="button" type="submit">
